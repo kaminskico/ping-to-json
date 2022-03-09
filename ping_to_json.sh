@@ -52,15 +52,7 @@ elif  [ -z "${RTT_SUMMARY_JSON}" ]; then
   echo "8"
   # exit 1
 fi
-: '
-PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data. --> BOTTOM
-64 bytes from 8.8.8.8: icmp_seq=1 ttl=116 time=8.15 ms --> 1 & BOTTOM
-64 bytes from 8.8.8.8: icmp_seq=2 ttl=116 time=10.5 ms --> 2 & BOTTOM
---> BOTTOM
---- 8.8.8.8 ping statistics --- -->BOTTOM
-2 packets transmitted, 2 received, 0% packet loss, time 3ms --
-rtt min/avg/max/mdev = 8.148/9.303/10.459/1.159 ms
-'
+
 echo "{"
 echo "  \"rtt_summary\": ${RTT_SUMMARY_JSON},"
 echo "  \"rtt_statistics\": ${RTT_STATISTICS_JSON},"
