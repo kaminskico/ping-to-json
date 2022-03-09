@@ -10,10 +10,10 @@ SUMMARY_LINE="$(cat)"
 if [ -z "${SUMMARY_LINE}" ]; then
   >&2 echo 'ERROR: std input for the RTT summary line is empty'
   exit 1
-# elif ! echo "${SUMMARY_LINE}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
-  # >&2 echo 'ERROR: std input for the RTT summary line is not in the form of "** packets transmitted, ** received, *% packet loss, time ****ms"'
-  # >&2 echo ">${SUMMARY_LINE}"
-  # exit 1
+elif ! echo "${SUMMARY_LINE}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
+  >&2 echo 'ERROR: std input for the RTT summary line is not in the form of "** packets transmitted, ** received, *% packet loss, time ****ms"'
+  >&2 echo ">${SUMMARY_LINE}"
+  exit 1
 elif [ "$(echo "${SUMMARY_LINE}" | wc -l)" -ne 1 ]; then
   >&2 echo 'ERROR: Multiple lines in std input for the RTT summary line:'
   >&2 echo ">${SUMMARY_LINE}"
@@ -27,10 +27,10 @@ else
   THIRD_PART=$(echo "${SUMMARY_LINE}"  | awk -F',' '{print $3}') # (e.g.) " 0% packet loss"
   FOURTH_PART=$(echo "${SUMMARY_LINE}" | awk -F',' '{print $4}') # (e.g.) " time 29034ms"
 
-  if [ -z "$(echo "${FIRST_PART}" | awk "/^[0-9]+\spackets\stransmitted$/")" ] ; then
-    >&2 echo "ERROR: '${FIRST_PART}' is not in the form of '** packets transmitted', from the below summary line:"
-    >&2 echo ">${SUMMARY_LINE}"
-    exit 1
+  # if [ -z "$(echo "${FIRST_PART}" | awk "/^[0-9]+\spackets\stransmitted$/")" ] ; then
+    # >&2 echo "ERROR: '${FIRST_PART}' is not in the form of '** packets transmitted', from the below summary line:"
+    # >&2 echo ">${SUMMARY_LINE}"
+    # exit 1
   elif [ -z "$(echo "${SECOND_PART}" | awk "/^\s[0-9]+\sreceived$/")" ] ; then
     >&2 echo "ERROR: '${SECOND_PART}', is not in the form of ' ** received', from the below summary line:"
     >&2 echo ">${SUMMARY_LINE}"
