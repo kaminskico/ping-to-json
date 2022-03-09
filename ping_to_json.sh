@@ -39,6 +39,7 @@ while read -r line; do
 	  echo "6"
     fi
   fi
+echo "BOTTOM"
 done < /dev/stdin
 
 
