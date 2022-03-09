@@ -27,11 +27,6 @@ else
   THIRD_PART=$(echo "${SUMMARY_LINE}"  | awk -F',' '{print $3}') # (e.g.) " 0% packet loss"
   FOURTH_PART=$(echo "${SUMMARY_LINE}" | awk -F',' '{print $4}') # (e.g.) " time 29034ms"
 
-# echo "${FIRST_PART}"
-# echo "${SECOND_PART}"
-# echo "${THIRD_PART}"
-# echo "${FOURTH_PART}"
-
   if [ -n "$(echo "${FIRST_PART}" | awk "/^[0-9]+\spackets\stransmitted$/")" ] ; then
     >&2 echo "ERROR: '${FIRST_PART}' is not in the form of '** packets transmitted', from the below summary line:"
     >&2 echo ">${SUMMARY_LINE}"
@@ -49,23 +44,6 @@ else
     >&2 echo ">${SUMMARY_LINE}"
     exit 1
   fi
-  # if [ -z "$(echo "${FIRST_PART}" | awk "/^[0-9]+\spackets\stransmitted$/")" ] ; then
-    # >&2 echo "ERROR: '${FIRST_PART}' is not in the form of '** packets transmitted', from the below summary line:"
-    # >&2 echo ">${SUMMARY_LINE}"
-    # exit 1
-  # elif [ -z "$(echo "${SECOND_PART}" | awk "/^\s[0-9]+\sreceived$/")" ] ; then
-    # >&2 echo "ERROR: '${SECOND_PART}', is not in the form of ' ** received', from the below summary line:"
-    # >&2 echo ">${SUMMARY_LINE}"
-    # exit 1
-  # elif [ -z "$(echo "${THIRD_PART}" | awk "/^\s[0-9]+\%\spacket\sloss$/")" ] ; then
-    # >&2 echo "ERROR: '${THIRD_PART}', is not in the form of ' **% packet loss', from the below summary line:"
-    # >&2 echo ">${SUMMARY_LINE}"
-    # exit 1
-  # elif [ -z "$(echo "${FOURTH_PART}" | awk "/^\stime\s[0-9]+[a-z]{1,2}$/")" ]; then
-    # >&2 echo "ERROR: '${FOURTH_PART}', is not in the form of ' time **ms', from the below summary line:"
-    # >&2 echo ">${SUMMARY_LINE}"
-    # exit 1
-  # fi
 
   # 1. Parse the "30 packets transmitted" part of the SUMMARY_LINE
   # (e.g.) "30 packets transmitted"

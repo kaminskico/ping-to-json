@@ -13,43 +13,34 @@ while read -r line; do
   if echo "${line}" | grep "bytes from" | grep "icmp_seq=" | grep "ttl=" | grep -q "time=" ; then
     if [ -z "${ICMP_SEQUENCES}" ]; then
       ICMP_SEQUENCES="$(echo "${line}" | ./icmp_line.sh)"
-	  echo "1"
     else
       ICMP_SEQUENCES="${ICMP_SEQUENCES}, $(echo "${line}" | ./icmp_line.sh)"
-	  echo "2"
     fi
   elif echo "${line}" | grep -q "rtt min/avg/max/mdev" ; then
     if [ -n "${RTT_STATISTICS_JSON}" ]; then
       >&2 echo "ERROR: There must be only one RTT statistics line, but '${line}' appeared as another one. Previous RTT statistics is:"
       >&2 echo "${RTT_STATISTICS_JSON}"
-	  echo "3"
       exit 1
     else
       RTT_STATISTICS_JSON="$(echo "${line}" | ./rtt_statistics.sh)"
-	  echo "4"
     fi
   elif echo "${line}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
     if [ -n "${RTT_SUMMARY_JSON}" ]; then
       >&2 echo "ERROR: There must be only one RTT summary line, but '${line}' appeared as another one. Previous RTT summary is:"
       >&2 echo "${RTT_SUMMARY_JSON}"
-	  echo "5"
       exit 1
     else
       RTT_SUMMARY_JSON="$(echo "${line}" | ./rtt_summary.sh)"
-	  echo "6"
     fi
   fi
-echo "BOTTOM"
 done < /dev/stdin
 
 
 if [ -z "${RTT_STATISTICS_JSON}" ]; then
   >&2 echo "ERROR: RTT statistics line is not found, which starts with rtt min/avg/max/mdev"
-  echo "7"
   exit 1
 elif  [ -z "${RTT_SUMMARY_JSON}" ]; then
   >&2 echo "ERROR: RTT summary line is not found, which is like '** packets transmitted, ** received, *% packet loss, time ****ms'"
-  echo "8"
   # exit 1
 fi
 
