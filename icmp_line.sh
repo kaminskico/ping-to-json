@@ -15,6 +15,7 @@ elif [ "$(echo "${ICMP_LINE}" | wc -l)" -ne 1 ]; then
   >&2 echo "${ICMP_LINE}"
   exit 1
 else
+  echo "${ICMP_LINE}"
   FIRST_HALF=$(echo "${ICMP_LINE}" | awk  -F':' '{print $1}') # (e.g.) "64 bytes from 10.116.4.5" or "64 bytes from nrt20s09-in-f14.1e100.net (172.217.161.78)"
   SECOND_HALF=$(echo "${ICMP_LINE}" | awk -F':' '{print $2}') # (e.g.) " icmp_seq=1 ttl=57 time=8.77 ms"
 
