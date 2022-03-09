@@ -10,12 +10,10 @@ SUMMARY_LINE="$(cat)"
 if [ -z "${SUMMARY_LINE}" ]; then
   >&2 echo 'ERROR: std input for the RTT summary line is empty'
   exit 1
-:'
-elif ! echo "${SUMMARY_LINE}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
-  >&2 echo 'ERROR: std input for the RTT summary line is not in the form of "** packets transmitted, ** received, *% packet loss, time ****ms"'
-  >&2 echo ">${SUMMARY_LINE}"
-  exit 1
-'
+# elif ! echo "${SUMMARY_LINE}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
+  # >&2 echo 'ERROR: std input for the RTT summary line is not in the form of "** packets transmitted, ** received, *% packet loss, time ****ms"'
+  # >&2 echo ">${SUMMARY_LINE}"
+  # exit 1
 elif [ "$(echo "${SUMMARY_LINE}" | wc -l)" -ne 1 ]; then
   >&2 echo 'ERROR: Multiple lines in std input for the RTT summary line:'
   >&2 echo ">${SUMMARY_LINE}"
