@@ -46,6 +46,6 @@ done < /dev/stdin
 
 echo "{"
 echo "  \"rtt_summary\": ${RTT_SUMMARY_JSON},"
-# echo "  \"rtt_statistics\": ${RTT_STATISTICS_JSON},"
+echo "  \"rtt_statistics\": ${RTT_STATISTICS_JSON},"
 echo "  \"icmp_sequences\": [${ICMP_SEQUENCES}]"
 echo "}"
