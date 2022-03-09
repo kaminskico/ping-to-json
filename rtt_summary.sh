@@ -27,10 +27,10 @@ else
   THIRD_PART=$(echo "${SUMMARY_LINE}"  | awk -F',' '{print $3}') # (e.g.) " 0% packet loss"
   FOURTH_PART=$(echo "${SUMMARY_LINE}" | awk -F',' '{print $4}') # (e.g.) " time 29034ms"
 
-echo FIRST_PART
-echo SECOND_PART
-echo THIRD_PART
-echo FOURTH_PART
+echo "${FIRST_PART}"
+echo "${SECOND_PART}"
+echo "${THIRD_PART}"
+echo "${FOURTH_PART}"
 
   if [ -z "$(echo "${FIRST_PART}" | awk "/^[0-9]+\spackets\stransmitted$/")" ] ; then
     >&2 echo "ERROR: '${FIRST_PART}' is not in the form of '** packets transmitted', from the below summary line:"
