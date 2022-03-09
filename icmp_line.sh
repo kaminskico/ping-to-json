@@ -17,8 +17,10 @@ elif [ "$(echo "${ICMP_LINE}" | wc -l)" -ne 1 ]; then
 else
   echo "${ICMP_LINE}"
   FIRST_HALF=$(echo "${ICMP_LINE}" | awk  -F':' '{print $1}') # (e.g.) "64 bytes from 10.116.4.5" or "64 bytes from nrt20s09-in-f14.1e100.net (172.217.161.78)"
+  echo FIRST_HALF
   SECOND_HALF=$(echo "${ICMP_LINE}" | awk -F':' '{print $2}') # (e.g.) " icmp_seq=1 ttl=57 time=8.77 ms"
-
+  echo SECOND_HALF
+  
   # part-by-part validation in FIRST_HALF
   FIRST_HALF_FIRST_PART=$(echo "${FIRST_HALF}"  | awk '{print $1}') # (e.g.) "64"
   FIRST_HALF_SECOND_PART=$(echo "${FIRST_HALF}" | awk '{print $2}') # "bytes"
