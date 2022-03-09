@@ -37,7 +37,7 @@ while read -r line; do
     else
       RTT_SUMMARY_JSON="$(echo "${line}" | ./rtt_summary.sh)"
 	  echo "6"
-   fi
+    fi
   fi
 done < /dev/stdin
 
