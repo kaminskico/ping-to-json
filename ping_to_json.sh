@@ -36,13 +36,13 @@ while read -r line; do
 done < /dev/stdin
 
 
-# if [ -z "${RTT_STATISTICS_JSON}" ]; then
-  # >&2 echo "ERROR: RTT statistics line is not found, which starts with rtt min/avg/max/mdev"
+if [ -z "${RTT_STATISTICS_JSON}" ]; then
+  >&2 echo "ERROR: RTT statistics line is not found, which starts with rtt min/avg/max/mdev"
+  exit 1
+elif  [ -z "${RTT_SUMMARY_JSON}" ]; then
+  >&2 echo "ERROR: RTT summary line is not found, which is like '** packets transmitted, ** received, *% packet loss, time ****ms'"
   # exit 1
-# elif  [ -z "${RTT_SUMMARY_JSON}" ]; then
-  # >&2 echo "ERROR: RTT summary line is not found, which is like '** packets transmitted, ** received, *% packet loss, time ****ms'"
-  # exit 1
-# fi
+fi
 
 echo "{"
 echo "  \"rtt_summary\": ${RTT_SUMMARY_JSON},"
