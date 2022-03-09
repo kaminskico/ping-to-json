@@ -16,14 +16,14 @@ while read -r line; do
     else
       ICMP_SEQUENCES="${ICMP_SEQUENCES}, $(echo "${line}" | ./icmp_line.sh)"
     fi
-  # elif echo "${line}" | grep -q "rtt min/avg/max/mdev" ; then
-    # if [ -n "${RTT_STATISTICS_JSON}" ]; then
-      # >&2 echo "ERROR: There must be only one RTT statistics line, but '${line}' appeared as another one. Previous RTT statistics is:"
-      # >&2 echo "${RTT_STATISTICS_JSON}"
-      # exit 1
-    # else
-      # RTT_STATISTICS_JSON="$(echo "${line}" | ./rtt_statistics.sh)"
-    # fi
+  elif echo "${line}" | grep -q "rtt min/avg/max/mdev" ; then
+    if [ -n "${RTT_STATISTICS_JSON}" ]; then
+      >&2 echo "ERROR: There must be only one RTT statistics line, but '${line}' appeared as another one. Previous RTT statistics is:"
+      >&2 echo "${RTT_STATISTICS_JSON}"
+      exit 1
+    else
+      RTT_STATISTICS_JSON="$(echo "${line}" | ./rtt_statistics.sh)"
+    fi
   elif echo "${line}" | grep "packets transmitted, " | grep "received, " | grep " packet loss, " | grep -q "time " ; then
     if [ -n "${RTT_SUMMARY_JSON}" ]; then
       >&2 echo "ERROR: There must be only one RTT summary line, but '${line}' appeared as another one. Previous RTT summary is:"
